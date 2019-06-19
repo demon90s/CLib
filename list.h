@@ -28,4 +28,7 @@ ListNode* list_remove(ListNode *header, void *value, cmp_function cmp);
 // 排序链表，使用cmp作为匹配算法（算法返回大于0则v1往后排）
 void list_sort(ListNode *header, cmp_function cmp);
 
+// 获得list长度
+int list_size(ListNode *header);
+
 #endif // LIST_H

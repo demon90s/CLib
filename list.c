@@ -112,3 +112,16 @@ void list_sort(ListNode *header, cmp_function cmp)
 		}
 	}
 }
+
+int list_size(ListNode *header)
+{
+	int sz = 0;
+	ListNode *p = header;
+	
+	while (p != NULL) {
+		sz++;
+		p = p->next;
+	}
+
+	return sz;
+}
