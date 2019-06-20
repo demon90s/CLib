@@ -60,5 +60,17 @@ void test_list()
 
 	test_print_list(header);
 
+	printf("list size: %d\n", list_size(header));
+
+	value = (int*)malloc(sizeof(int));
+	*value = 105;
+	if (NULL != list_search(header, value, test_cmp_int)) {
+		printf("find value %d\n", *value);
+	}
+	else {
+		printf("Not found value: %d\n", *value);
+	}
+	free(value);
+
 	list_destroy(header);
 }

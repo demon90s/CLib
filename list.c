@@ -73,7 +73,7 @@ ListNode* list_remove(ListNode *header, void *value, cmp_function cmp)
 	ListNode *next = header->next;
 	ListNode *pre = header;
 
-	// Check header
+	/* Check header */
 	if (pre->value && cmp(value, pre->value) == 0) {
 		free(pre->value);
 		free(pre);
@@ -96,9 +96,24 @@ ListNode* list_remove(ListNode *header, void *value, cmp_function cmp)
 	return header;
 }
 
+ListNode* list_search(ListNode *header, void *value, cmp_function cmp)
+{
+	ListNode *p;
+
+	p = header;
+	while (p != NULL) {
+		if (cmp(p->value, value) == 0)
+			break;
+
+		p = p->next;
+	}
+
+	return p;
+}
+
 void list_sort(ListNode *header, cmp_function cmp)
 {
-	// 由于是单向链表，使用冒泡排序比较方便
+	/* bubble sort */
 	ListNode *p, *q;
 	void* tmp_v;
 

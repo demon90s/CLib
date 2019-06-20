@@ -5,4 +5,4 @@
 
 void test_list();
 
-#endif // TEST_LIST_H
+#endif /* TEST_LIST_H */

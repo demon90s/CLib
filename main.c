@@ -6,8 +6,8 @@
 
 int main()
 {
-	//test_list();
-	test_stdinread();
+	test_list();
+	/* test_stdinread(); */
 
 	return 0;
 }

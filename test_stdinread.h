@@ -3,4 +3,4 @@
 
 void test_stdinread();
 
-#endif
+#endif /* TEST_STDINREAD_H */

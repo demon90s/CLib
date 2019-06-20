@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g -Wall -std=c99
+CFLAGS = -g -Wall -std=c89
 
 main: main.o list.o \
 	stdinread.o \
