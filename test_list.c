@@ -8,8 +8,8 @@ static void test_print_list(ListNode *header)
 
 	p = header;
 	while (p != NULL) {
-		printf("%d ", *(int*)(p->value));
-		p = p->next;
+		printf("%d ", *(int*)(list_getvalue(p)));
+		p = list_next(p);
 	}
 	printf("\n");
 }

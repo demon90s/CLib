@@ -1,6 +1,11 @@
 #include "list.h"
 #include <stdlib.h>
 
+typedef struct ListNode_ {
+	void *value;			/* point to dynamic obj */
+	struct ListNode_* next;
+} ListNode;
+
 ListNode* list_init()
 {
 	ListNode* node = (ListNode*)malloc(sizeof(ListNode));
@@ -26,6 +31,11 @@ void list_destroy(ListNode* header)
 		free(p);
 		p = next;
 	}
+}
+
+void* list_getvalue(ListNode* node)
+{
+	return node->value;
 }
 
 void list_setvalue(ListNode* node, void* value)
@@ -139,4 +149,9 @@ int list_size(ListNode *header)
 	}
 
 	return sz;
+}
+
+ListNode* list_next(ListNode *node)
+{
+	return node->next;
 }

@@ -4,16 +4,16 @@
 /* compare the obj pointed by v1 and v2, return 0 if equal, greater then 0 if v1 > v2, else v1 < v2 */
 typedef int (*cmp_function)(void *v1, void *v2);
 
-typedef struct ListNode_ {
-	void *value;			/* point to dynamic obj */
-	struct ListNode_* next;
-} ListNode;
+typedef struct ListNode_ ListNode;
 
 /* create list, return header node, NULL if failed */
 ListNode* list_init();
 
 /* destroy list, free all value */
 void list_destroy(ListNode* header);
+
+/* get the node value */
+void* list_getvalue(ListNode* node);
 
 /* set value to node, old value will be free */
 void list_setvalue(ListNode* node, void* value);
@@ -35,5 +35,8 @@ void list_sort(ListNode *header, cmp_function cmp);
 
 /* return the list size, empty list return 0 */
 int list_size(ListNode *header);
+
+/* return next node */
+ListNode* list_next(ListNode *node);
 
 #endif /* LIST_H */
