@@ -1,80 +1,83 @@
-#include "stack.h"
+#include <assert.h>
 #include <stdlib.h>
-#include <string.h>
+#include "stack.h"
 
-typedef struct StackElement_ {
-    void* value;    /* dynamic object allocate by user */
-} StackElement;
+#define T Stack_T
 
-typedef struct Stack_ {
-    int max_size;
-    int size;           /* this is top index */
-    StackElement* beg;  /* point to first element */
-} Stack;
-
-Stack* stack_init(int sz)
+struct T
 {
-    if (sz <= 0)
-        return NULL;
+	int count;
+	struct elem
+	{
+		void *x;
+		struct elem *link;
+	} *head;
+};
 
-    Stack* s = (Stack*)malloc(sizeof(Stack));
-    s->max_size = sz;
-    s->size = 0;
-    s->beg = (StackElement*)malloc(sizeof(StackElement*) * sz);
-    memset(s->beg, 0, sizeof(StackElement*) * sz);
+T Stack_new(void)
+{
+	T stk;
 
-    return s;
+	stk = (T) malloc(sizeof(*stk));
+	assert(stk);
+
+	stk->count = 0;
+	stk->head = NULL;
+
+	return stk;
 }
 
-void stack_destroy(Stack* s)
+int Stack_empty(T stk)
 {
-    while (stack_size(s) > 0) {
-        stack_pop(s);
-    }
-
-    free(s->beg);
-
-    free(s);
+	assert(stk);
+	return stk->count == 0;
 }
 
-void* stack_top(Stack *s)
+void Stack_push(T stk, void *x)
 {
-    if (stack_size(s) <= 0)
-        return NULL;
+	struct elem *t;
 
-    return s->beg[s->size - 1].value;
+	assert(stk);
+	t = (struct elem *) malloc(sizeof(struct elem));
+	assert(t);
+
+	t->x = x;
+	t->link = stk->head;
+	stk->head = t;
+	stk->count++;
 }
 
-void stack_push(Stack *s, void* value)
+void Stack_pop(T stk)
 {
-    StackElement *beg;
+	struct elem *t;
 
-    if (stack_size(s) == s->max_size) {
-        /* realloc */
-        beg = (StackElement*)malloc(sizeof(StackElement) * s->max_size * 2);
-        memset(beg, 0, sizeof(StackElement) * s->max_size * 2);
-        memcpy(beg, s->beg, sizeof(StackElement) * s->max_size);
+	assert(stk);
+	assert(stk->count > 0);
 
-        free(s->beg);
+	t = stk->head;
+	stk->head = t->link;
+	stk->count--;
 
-        s->max_size = s->max_size * 2;
-        s->beg = beg;
-    }
-
-    s->beg[s->size++].value = value;
+	free(t->x);
+	free(t);
 }
 
-void stack_pop(Stack *s)
+void *Stack_top(T stk)
 {
-    void *value = stack_top(s);
-
-    if (value != NULL) {
-        free(value);
-        s->size--;
-    }
+	assert(stk && !Stack_empty(stk));
+	return stk->head->x;
 }
 
-int stack_size(Stack *s)
+void Stack_free(T * stk)
 {
-    return s->size;
+	struct elem *t, *u;
+
+	assert(stk && *stk);
+	for (t = (*stk)->head; t; t = u)
+	{
+		u = t->link;
+		free(t->x);
+		free(t);
+	}
+	free(*stk);
 }

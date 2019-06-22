@@ -1,24 +1,35 @@
-#ifndef STACK_H
-#define STACK_H 
+#ifndef STACK_INCLUDED
+#define STACK_INCLUDED
 
-typedef struct Stack_ Stack;
+/*
+	stack
+	- the ADT type is Stack_T
+	- capacity no limit
+	- store and manage the dynamic value
+*/
 
-/* create a new stack with max_size sz */
-Stack* stack_init(int sz);
+#define T Stack_T
 
-/* destroy the stack, and free all value */
-void stack_destroy(Stack *s);
+typedef struct T *T;
 
-/* return the top element value, NULL if stack is empty */
-void* stack_top(Stack *s);
+/* create a new stack */
+extern T Stack_new(void);
 
-/* push one element to stack */
-void stack_push(Stack *s, void* value);
+/* return 1 if stack is empty, otherwise 0 */
+extern int Stack_empty(T stk);
 
-/* pop one element from stack */
-void stack_pop(Stack *s);
+/* push the value x to stack */
+extern void Stack_push(T stk, void *x);
 
-/* return the size of stack */
-int stack_size(Stack *s);
+/* pop a value from stack */
+extern void Stack_pop(T stk);
 
-#endif /* STACK_H */
+/* get top value of stack */
+extern void *Stack_top(T stk);
+
+/* free the stack */
+extern void Stack_free(T * stk);
+
+#undef T
+
+#endif

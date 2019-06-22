@@ -2,22 +2,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static void test_print_list(ListNode *header)
+static void test_print_list(ListNode * header)
 {
 	ListNode *p;
 
 	p = header;
-	while (p != NULL) {
-		printf("%d ", *(int*)(list_getvalue(p)));
+	while (p != NULL)
+	{
+		printf("%d ", *(int *) (list_getvalue(p)));
 		p = list_next(p);
 	}
 	printf("\n");
 }
 
-static int test_cmp_int(void* v1, void* v2)
+static int test_cmp_int(void *v1, void *v2)
 {
-	int* p1 = v1;
-	int* p2 = v2;
+	int *p1 = v1;
+	int *p2 = v2;
 	return *p2 - *p1;
 }
 
@@ -27,25 +28,26 @@ void test_list()
 	int i;
 	int *value;
 
-	value = (int*)malloc(sizeof(int));
+	value = (int *) malloc(sizeof(int));
 	*value = 1;
 	list_setvalue(header, value);
 
-	for (i = 0; i < 10; i++) {
-		value = (int*)malloc(sizeof(int));
+	for (i = 0; i < 10; i++)
+	{
+		value = (int *) malloc(sizeof(int));
 		*value = i + 100;
 		list_pushback(header, value);
 	}
 
 	test_print_list(header);
 
-	value = (int*)malloc(sizeof(int));
+	value = (int *) malloc(sizeof(int));
 	*value = 1000;
 	list_insert(header, value);
 
 	test_print_list(header);
 
-	value = (int*)malloc(sizeof(int));
+	value = (int *) malloc(sizeof(int));
 	*value = 105;
 	header = list_remove(header, value, test_cmp_int);
 	*value = 1;
@@ -62,12 +64,14 @@ void test_list()
 
 	printf("list size: %d\n", list_size(header));
 
-	value = (int*)malloc(sizeof(int));
+	value = (int *) malloc(sizeof(int));
 	*value = 105;
-	if (NULL != list_search(header, value, test_cmp_int)) {
+	if (NULL != list_search(header, value, test_cmp_int))
+	{
 		printf("find value %d\n", *value);
 	}
-	else {
+	else
+	{
 		printf("Not found value: %d\n", *value);
 	}
 	free(value);

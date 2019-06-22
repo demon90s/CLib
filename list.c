@@ -1,14 +1,15 @@
 #include "list.h"
 #include <stdlib.h>
 
-typedef struct ListNode_ {
-	void *value;			/* point to dynamic obj */
-	struct ListNode_* next;
+typedef struct ListNode_
+{
+	void *value;				/* point to dynamic obj */
+	struct ListNode_ *next;
 } ListNode;
 
-ListNode* list_init()
+ListNode *list_init()
 {
-	ListNode* node = (ListNode*)malloc(sizeof(ListNode));
+	ListNode *node = (ListNode *) malloc(sizeof(ListNode));
 	if (node == NULL)
 		return NULL;
 
@@ -18,12 +19,13 @@ ListNode* list_init()
 	return node;
 }
 
-void list_destroy(ListNode* header)
+void list_destroy(ListNode * header)
 {
 	ListNode *p = header;
 	ListNode *next;
 
-	while (p != NULL) {
+	while (p != NULL)
+	{
 		if (p->value != NULL)
 			free(p->value);
 
@@ -33,12 +35,12 @@ void list_destroy(ListNode* header)
 	}
 }
 
-void* list_getvalue(ListNode* node)
+void *list_getvalue(ListNode * node)
 {
 	return node->value;
 }
 
-void list_setvalue(ListNode* node, void* value)
+void list_setvalue(ListNode * node, void *value)
 {
 	if (node->value != NULL)
 		free(node->value);
@@ -46,16 +48,17 @@ void list_setvalue(ListNode* node, void* value)
 	node->value = value;
 }
 
-ListNode* list_pushback(ListNode* header, void* value)
+ListNode *list_pushback(ListNode * header, void *value)
 {
-	ListNode* node;
+	ListNode *node;
 	ListNode *last = header;
 
-	while (last->next != NULL) {
+	while (last->next != NULL)
+	{
 		last = last->next;
 	}
 
-	node = (ListNode*)malloc(sizeof(ListNode));
+	node = (ListNode *) malloc(sizeof(ListNode));
 	node->value = value;
 	node->next = NULL;
 
@@ -64,12 +67,12 @@ ListNode* list_pushback(ListNode* header, void* value)
 	return node;
 }
 
-ListNode* list_insert(ListNode* prenode, void* value)
+ListNode *list_insert(ListNode * prenode, void *value)
 {
-	ListNode* node;
-	ListNode* next = prenode->next;
+	ListNode *node;
+	ListNode *next = prenode->next;
 
-	node = (ListNode*)malloc(sizeof(ListNode));
+	node = (ListNode *) malloc(sizeof(ListNode));
 	node->value = value;
 	node->next = next;
 
@@ -78,20 +81,23 @@ ListNode* list_insert(ListNode* prenode, void* value)
 	return node;
 }
 
-ListNode* list_remove(ListNode *header, void *value, cmp_function cmp)
+ListNode *list_remove(ListNode * header, void *value, cmp_function cmp)
 {
 	ListNode *next = header->next;
 	ListNode *pre = header;
 
 	/* Check header */
-	if (pre->value && cmp(value, pre->value) == 0) {
+	if (pre->value && cmp(value, pre->value) == 0)
+	{
 		free(pre->value);
 		free(pre);
 		return next;
 	}
 
-	while (next != NULL) {
-		if (next->value && cmp(value, next->value) == 0) {
+	while (next != NULL)
+	{
+		if (next->value && cmp(value, next->value) == 0)
+		{
 			pre->next = next->next;
 
 			free(next->value);
@@ -106,12 +112,13 @@ ListNode* list_remove(ListNode *header, void *value, cmp_function cmp)
 	return header;
 }
 
-ListNode* list_search(ListNode *header, void *value, cmp_function cmp)
+ListNode *list_search(ListNode * header, void *value, cmp_function cmp)
 {
 	ListNode *p;
 
 	p = header;
-	while (p != NULL) {
+	while (p != NULL)
+	{
 		if (cmp(p->value, value) == 0)
 			break;
 
@@ -121,15 +128,18 @@ ListNode* list_search(ListNode *header, void *value, cmp_function cmp)
 	return p;
 }
 
-void list_sort(ListNode *header, cmp_function cmp)
+void list_sort(ListNode * header, cmp_function cmp)
 {
 	/* bubble sort */
 	ListNode *p, *q;
-	void* tmp_v;
+	void *tmp_v;
 
-	for (p = header; p->next != NULL; p = p->next) {
-		for (q = p->next; q != NULL; q = q->next) {
-			if (cmp(p->value, q->value) > 0) {
+	for (p = header; p->next != NULL; p = p->next)
+	{
+		for (q = p->next; q != NULL; q = q->next)
+		{
+			if (cmp(p->value, q->value) > 0)
+			{
 				tmp_v = p->value;
 				p->value = q->value;
 				q->value = tmp_v;
@@ -138,12 +148,13 @@ void list_sort(ListNode *header, cmp_function cmp)
 	}
 }
 
-int list_size(ListNode *header)
+int list_size(ListNode * header)
 {
 	int sz = 0;
 	ListNode *p = header;
-	
-	while (p != NULL) {
+
+	while (p != NULL)
+	{
 		sz++;
 		p = p->next;
 	}
@@ -151,7 +162,7 @@ int list_size(ListNode *header)
 	return sz;
 }
 
-ListNode* list_next(ListNode *node)
+ListNode *list_next(ListNode * node)
 {
 	return node->next;
 }

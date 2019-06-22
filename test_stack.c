@@ -5,24 +5,25 @@
 
 void test_stack()
 {
-    int i;
-    Stack *s;
-    int *value;
+	int i;
+	Stack_T s;
+	int *value;
 
-    s = stack_init(1);
+	s = Stack_new();
 
-    for (i = 0; i < 10; i++)
-    {
-        value = (int*)malloc(sizeof(int));
-        *value = i;
-        stack_push(s, value);
-    }
+	for (i = 0; i < 10; i++)
+	{
+		value = (int *) malloc(sizeof(int));
+		*value = i;
+		Stack_push(s, value);
+	}
 
-    while (stack_size(s) > 0) {
-        printf("%d\n", *(int*)stack_top(s));
+	while (!Stack_empty(s))
+	{
+		printf("%d\n", *(int *) Stack_top(s));
 
-        stack_pop(s);
-    }
+		Stack_pop(s);
+	}
 
-    stack_destroy(s);
+	Stack_free(&s);
 }
