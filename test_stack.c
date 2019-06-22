@@ -1,7 +1,8 @@
-#include "test_stack.h"
-#include "stack.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "unity/unity.h"
+#include "test_stack.h"
+#include "stack.h"
 
 void test_stack()
 {
@@ -18,9 +19,11 @@ void test_stack()
 		Stack_push(s, value);
 	}
 
+	i = 9;
 	while (!Stack_empty(s))
 	{
-		printf("%d\n", *(int *) Stack_top(s));
+		/* printf("%d\n", *(int *) Stack_top(s)); */
+		TEST_ASSERT((*(int *) Stack_top(s)) == i--);
 
 		Stack_pop(s);
 	}

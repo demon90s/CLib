@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "unity/unity.h"
 #include "test_array.h"
 #include "test_list.h"
 #include "test_stack.h"
@@ -7,10 +8,12 @@
 
 int main()
 {
-	test_array();
-	/* test_list(); */
-	/* test_stack(); */
-	/* test_stdinread(); */
+	UNITY_BEGIN();
 
-	return 0;
+	/* RUN_TEST(test_array); */
+	/* RUN_TEST(test_list); */
+	RUN_TEST(test_stack);
+	/* RUN_TEST(test_stdinread); */
+
+	return UNITY_END();
 }
