@@ -4,14 +4,12 @@
 
 #define T Stack_T
 
-struct T
-{
+struct T {
 	int count;
-	struct elem
-	{
-		void *x;
-		struct elem *link;
-	} *head;
+	struct elem {
+		void* x;
+		struct elem* link;
+	}* head;
 };
 
 T Stack_new(void)
@@ -33,12 +31,12 @@ int Stack_empty(T stk)
 	return stk->count == 0;
 }
 
-void Stack_push(T stk, void *x)
+void Stack_push(T stk, void* x)
 {
-	struct elem *t;
+	struct elem* t;
 
 	assert(stk);
-	t = (struct elem *) malloc(sizeof(struct elem));
+	t = (struct elem*) malloc(sizeof(struct elem));
 	assert(t);
 
 	t->x = x;
@@ -49,7 +47,7 @@ void Stack_push(T stk, void *x)
 
 void Stack_pop(T stk)
 {
-	struct elem *t;
+	struct elem* t;
 
 	assert(stk);
 	assert(stk->count > 0);
@@ -62,19 +60,18 @@ void Stack_pop(T stk)
 	free(t);
 }
 
-void *Stack_top(T stk)
+void* Stack_top(T stk)
 {
 	assert(stk && !Stack_empty(stk));
 	return stk->head->x;
 }
 
-void Stack_free(T * stk)
+void Stack_free(T* stk)
 {
-	struct elem *t, *u;
+	struct elem* t, *u;
 
 	assert(stk && *stk);
-	for (t = (*stk)->head; t; t = u)
-	{
+	for (t = (*stk)->head; t; t = u) {
 		u = t->link;
 		free(t->x);
 		free(t);

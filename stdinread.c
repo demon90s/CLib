@@ -10,13 +10,13 @@ int stdinread_skip()
 	return skipped;
 }
 
-BOOL stdinread_char(char *c)
+BOOL stdinread_char(char* c)
 {
 	scanf(" %c", c);
 	return stdinread_skip() == 0;
 }
 
-BOOL stdinread_int(int *v)
+BOOL stdinread_int(int* v)
 {
 	int res;
 
@@ -27,7 +27,7 @@ BOOL stdinread_int(int *v)
 	return res == 1 ? TRUE : FALSE;
 }
 
-BOOL stdinread_float(float *v)
+BOOL stdinread_float(float* v)
 {
 	int res;
 
@@ -38,15 +38,14 @@ BOOL stdinread_float(float *v)
 	return res == 1 ? TRUE : FALSE;
 }
 
-BOOL stdinread_line(char *str, int len)
+BOOL stdinread_line(char* str, int len)
 {
 	int ch, i = 0;
 	BOOL ret = TRUE;
 
 	while (isspace(ch = getchar())) ;
 
-	while (1)
-	{
+	while (1) {
 		if (ch == '\n' || ch == EOF)
 			break;
 

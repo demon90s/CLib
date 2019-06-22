@@ -6,27 +6,25 @@
 void test_array()
 {
 	int i;
-	Array *arr;
+	Array* arr;
 
 	arr = array_init(1);
 
-	for (i = 0; i < 10; i++)
-	{
-		int *value = (int *) malloc(sizeof(int));
+	for (i = 0; i < 10; i++) {
+		int* value = (int*) malloc(sizeof(int));
 		*value = i;
 		array_pushback(arr, value);
 	}
 
 	{
-		int *value = (int *) malloc(sizeof(int));
+		int* value = (int*) malloc(sizeof(int));
 		*value = 999;
 		array_setvalue(arr, 0, value);
 	}
 
 	printf("array: ");
-	for (i = 0; i < array_size(arr); i++)
-	{
-		printf(" %d", *(int *) array_getvalue(arr, i));
+	for (i = 0; i < array_size(arr); i++) {
+		printf(" %d", *(int*) array_getvalue(arr, i));
 	}
 	printf("\n");
 
