@@ -17,7 +17,7 @@ void Except_raise(const T* e, const char* file, int line)
 			fprintf(stderr, " at 0x%p", e);
 		if (file && line > 0)
 			fprintf(stderr, " raised at %s:%d\n", file, line);
-		fprintf(stderr, "Abort\n");
+		fprintf(stderr, "abort...\n");
 		fflush(stderr);
 		abort();
 	}

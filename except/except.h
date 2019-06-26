@@ -12,10 +12,10 @@ typedef struct T {
 } T;
 
 /* this sturct hold the except status and
-   informations of handle functions */
+   informations of raise code */
 typedef struct Except_Frame Except_Frame;
 struct Except_Frame {
-	Except_Frame* prev;
+	Except_Frame* prev;	/* frame object, must be a local variable */
 	jmp_buf env;
 	const char* file;
 	int line;
@@ -29,7 +29,6 @@ enum { Except_entered = 0,
      };
 
 extern Except_Frame* except_stack;
-extern const Except_T Assert_Failed;
 
 void Except_raise(const T* e, const char* file, int line);
 

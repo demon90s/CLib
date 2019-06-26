@@ -12,6 +12,7 @@ int main()
 	UNITY_BEGIN();
 
 	RUN_TEST(test_except);
+	RUN_TEST(test_assert);
 	/* RUN_TEST(test_array); */
 	/* RUN_TEST(test_list); */
 	RUN_TEST(test_stack);
