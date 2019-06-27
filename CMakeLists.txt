@@ -6,13 +6,13 @@ set(CMAKE_C_FLAGS "-g -Wall -std=c89")
 set(CMAKE_C_FLAGS_DEBUG "-g -Wall -std=c89")
 set(CMAKE_C_FLAGS_RELEASE "-Wall -std=c89")
 
-include_directories(${PROJECT_SOURCE_DIR} src)
+include_directories(${PROJECT_SOURCE_DIR} testcase)
 
 file(GLOB_RECURSE LIB_FILES stdinread.c stdinread.h common.h container/* mem/* except/*)
 
 add_library(clib ${LIB_FILES})
 
-file(GLOB_RECURSE TEST_FILES src/main.c src/test/* src/unity/*)
+file(GLOB_RECURSE TEST_FILES testcase/main.c testcase/test/* testcase/unity/*)
 
 add_executable(maintest ${TEST_FILES})
 target_link_libraries(maintest clib)
