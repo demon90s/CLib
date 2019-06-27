@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+
+project(clib)
+
+set(CMAKE_C_FLAGS "-g -Wall -std=c89")
+set(CMAKE_C_FLAGS_DEBUG "-g -Wall -std=c89")
+set(CMAKE_C_FLAGS_RELEASE "-Wall -std=c89")
+
+include_directories(${PROJECT_SOURCE_DIR} src)
+
+file(GLOB_RECURSE LIB_FILES stdinread.c stdinread.h common.h container/* mem/* except/*)
+
+add_library(clib ${LIB_FILES})
+
+file(GLOB_RECURSE TEST_FILES src/main.c src/test/* src/unity/*)
+
+add_executable(maintest ${TEST_FILES})
+target_link_libraries(maintest clib)

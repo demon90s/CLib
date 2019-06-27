@@ -1,5 +1,5 @@
 #include "test_array.h"
-#include "array.h"
+#include "container/array.h"
 #include <stdio.h>
 #include <stdlib.h>
 

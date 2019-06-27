@@ -46,7 +46,7 @@ void test_assert(void)
 		catched = 1;
 
 		/* a friendly notice */
-		/* 
+		/*
 		fprintf(stderr, "An internal error has occurred, please blablabla...\n");
 		RERAISE;
 		*/

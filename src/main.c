@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "unity/unity.h"
-#include "test_except.h"
-#include "test_array.h"
-#include "test_list.h"
-#include "test_stack.h"
-#include "test_stdinread.h"
+#include "test/test_except.h"
+#include "test/test_array.h"
+#include "test/test_list.h"
+#include "test/test_stack.h"
+#include "test/test_stdinread.h"
 
 int main()
 {

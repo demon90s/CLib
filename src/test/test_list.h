@@ -1,7 +1,7 @@
 #ifndef TEST_LIST_H
 #define TEST_LIST_H
 
-#include "list.h"
+#include "container/list.h"
 
 void test_list();
 
