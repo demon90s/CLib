@@ -1,4 +1,5 @@
 #include "container/array.h"
+#include "unity/unity.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -19,13 +20,13 @@ void test_array()
 		int* value = (int*) malloc(sizeof(int));
 		*value = 999;
 		array_setvalue(arr, 0, value);
+
+		TEST_ASSERT_EQUAL(999, *(int*)array_getvalue(arr, 0));
 	}
 
-	printf("array: ");
-	for (i = 0; i < array_size(arr); i++) {
-		printf(" %d", *(int*) array_getvalue(arr, i));
+	for (i = 1; i < array_size(arr); i++) {
+		TEST_ASSERT_EQUAL(i, *(int*) array_getvalue(arr, i));
 	}
-	printf("\n");
 
 	array_destroy(arr);
 }

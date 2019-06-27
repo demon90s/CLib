@@ -17,9 +17,10 @@ int main()
 	RUN_TEST(test_except);
 	RUN_TEST(test_assert);
 	RUN_TEST(test_mem);
-	/* RUN_TEST(test_array); */
-	/* RUN_TEST(test_list); */
+	RUN_TEST(test_array);
 	RUN_TEST(test_stack);
+	
+	/* RUN_TEST(test_list); */
 	/* RUN_TEST(test_stdinread); */
 
 	return UNITY_END();
