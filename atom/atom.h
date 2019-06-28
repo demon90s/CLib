@@ -1,5 +1,5 @@
 #ifndef ATOM_H
-#define ATOM_h
+#define ATOM_H
 
 /*
     atom is an unique character sequence
