@@ -8,7 +8,12 @@ set(CMAKE_C_FLAGS_RELEASE "-Wall -std=c89")
 
 include_directories(${PROJECT_SOURCE_DIR} testcase)
 
-file(GLOB_RECURSE LIB_FILES stdinread.c stdinread.h common.h container/* mem/* except/*)
+file(GLOB_RECURSE LIB_FILES 
+    stdinread.c stdinread.h common.h 
+    container/* 
+    mem/* 
+    except/*
+    atom/*)
 
 add_library(clib ${LIB_FILES})
 

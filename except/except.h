@@ -11,7 +11,7 @@ typedef struct T {
 	const char* reason;
 } T;
 
-/* this sturct hold the except status and
+/* this struct hold the except status and
    informations of raise code */
 typedef struct Except_Frame Except_Frame;
 struct Except_Frame {
