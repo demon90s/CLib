@@ -1,157 +1,127 @@
+#include <stdarg.h>
+#include <stddef.h>
+#include "except/assert.h"
+#include "mem/mem.h"
 #include "list.h"
-#include <stdlib.h>
 
-typedef struct ListNode_ {
-	void* value;				/* point to dynamic obj */
-	struct ListNode_* next;
-} ListNode;
+#define T List_T
 
-ListNode* list_init()
+/* functions */
+T List_push(T list, void* x)
 {
-	ListNode* node = (ListNode*) malloc(sizeof(ListNode));
-	if (node == NULL)
-		return NULL;
-
-	node->value = NULL;
-	node->next = NULL;
-
-	return node;
-}
-
-void list_destroy(ListNode* header)
-{
-	ListNode* p = header;
-	ListNode* next;
-
-	while (p != NULL) {
-		if (p->value != NULL)
-			free(p->value);
-
-		next = p->next;
-		free(p);
-		p = next;
-	}
-}
-
-void* list_getvalue(ListNode* node)
-{
-	return node->value;
-}
-
-void list_setvalue(ListNode* node, void* value)
-{
-	if (node->value != NULL)
-		free(node->value);
-
-	node->value = value;
-}
-
-ListNode* list_pushback(ListNode* header, void* value)
-{
-	ListNode* node;
-	ListNode* last = header;
-
-	while (last->next != NULL) {
-		last = last->next;
-	}
-
-	node = (ListNode*) malloc(sizeof(ListNode));
-	node->value = value;
-	node->next = NULL;
-
-	last->next = node;
-
-	return node;
-}
-
-ListNode* list_insert(ListNode* prenode, void* value)
-{
-	ListNode* node;
-	ListNode* next = prenode->next;
-
-	node = (ListNode*) malloc(sizeof(ListNode));
-	node->value = value;
-	node->next = next;
-
-	prenode->next = node;
-
-	return node;
-}
-
-ListNode* list_remove(ListNode* header, void* value, cmp_function cmp)
-{
-	ListNode* next = header->next;
-	ListNode* pre = header;
-
-	/* Check header */
-	if (pre->value && cmp(value, pre->value) == 0) {
-		free(pre->value);
-		free(pre);
-		return next;
-	}
-
-	while (next != NULL) {
-		if (next->value && cmp(value, next->value) == 0) {
-			pre->next = next->next;
-
-			free(next->value);
-			free(next);
-			break;
-		}
-
-		pre = next;
-		next = next->next;
-	}
-
-	return header;
-}
-
-ListNode* list_search(ListNode* header, void* value, cmp_function cmp)
-{
-	ListNode* p;
-
-	p = header;
-	while (p != NULL) {
-		if (cmp(p->value, value) == 0)
-			break;
-
-		p = p->next;
-	}
-
+	T p;
+	NEW(p);
+	p->first = x;
+	p->rest = list;
 	return p;
 }
 
-void list_sort(ListNode* header, cmp_function cmp)
+T List_list(void* x, ...)
 {
-	/* bubble sort */
-	ListNode* p, *q;
-	void* tmp_v;
+	va_list ap;
+	T list, *p = &list;
 
-	for (p = header; p->next != NULL; p = p->next) {
-		for (q = p->next; q != NULL; q = q->next) {
-			if (cmp(p->value, q->value) > 0) {
-				tmp_v = p->value;
-				p->value = q->value;
-				q->value = tmp_v;
-			}
-		}
+	va_start(ap, x);
+	for (; x; x = va_arg(ap, void*)) {
+		NEW(*p);
+		(*p)->first = x;
+		p = &(*p)->rest;
+	}
+	*p = NULL;
+	va_end(ap);
+	return list;
+}
+
+T List_append(T list, T tail)
+{
+	T* p = &list;
+
+	while (*p) {
+		p = &(*p)->rest;
+	}
+	*p = tail;
+
+	return list;
+}
+
+T List_copy(T list)
+{
+	T head, *p = &head;
+
+	for (; list; list = list->rest) {
+		NEW(*p);
+		(*p)->first = list->first;
+		p = &(*p)->rest;
+	}
+	*p = NULL;
+
+	return head;
+}
+
+T List_pop(T list, void** x)
+{
+	if (list) {
+		T head = list->rest;
+		if (x)
+			*x = list->first;
+		FREE(list);
+		return head;
+	}
+	else
+		return list;
+}
+
+T List_reverse(T list)
+{
+	T head = NULL, next;
+
+	for (; list; list = next) {
+		next = list->rest;
+		list->rest = head;
+		head = list;
+	}
+
+	return head;
+}
+
+int List_length(T list)
+{
+	int n;
+
+	for (n = 0; list; list = list->rest) {
+		n++;
+	}
+
+	return n;
+}
+
+void List_free(T* list)
+{
+	T next;
+
+	assert(list);
+	for (; *list; *list = next) {
+		next = (*list)->rest;
+		FREE(*list);
 	}
 }
 
-int list_size(ListNode* header)
+void List_map(T list, void apply(void** x, void* cl), void* cl)
 {
-	int sz = 0;
-	ListNode* p = header;
-
-	while (p != NULL) {
-		sz++;
-		p = p->next;
-	}
-
-	return sz;
+	assert(apply);
+	for (; list; list = list->rest)
+		apply(&list->first, cl);
 }
 
-ListNode* list_next(ListNode* node)
+void** List_toArray(T list, void* end)
 {
-	return node->next;
+	int i, n = List_length(list);
+	void** array = ALLOC((n+1) * sizeof(*array));
+
+	for (i = 0; i < n; i++) {
+		array[i] = list->first;
+		list = list->rest;
+	}
+	array[i] = end;
+	return array;
 }

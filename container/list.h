@@ -1,42 +1,73 @@
 #ifndef LIST_H
 #define LIST_H
 
-/* compare the obj pointed by v1 and v2, return 0 if equal, greater then 0 if v1 > v2, else v1 < v2 */
-typedef int (*cmp_function) (void* v1, void* v2);
+#define T List_T
 
-typedef struct ListNode_ ListNode;
+/*
+	List_T 是一个指向某个 struct List_T 实例的指针
+	NULL代表空链表
+*/
+typedef struct T* T;
 
-/* create list, return header node, NULL if failed */
-ListNode* list_init();
+struct T {
+	T rest;
+	void* first;
+};
 
-/* destroy list, free all value */
-void list_destroy(ListNode* header);
+/*
+	将tail赋值给list中最后一个结点的rest字段
+*/
+extern T List_append(T list, T tail);
 
-/* get the node value */
-void* list_getvalue(ListNode* node);
+/*
+	复制list，并返回其副本
+*/
+extern T List_copy(T list);
 
-/* set value to node, old value will be free */
-void list_setvalue(ListNode* node, void* value);
+/*
+	创建并返回一个链表
+	最后一个（第N+1个）指针参数为NULL
+	函数创建一个包含N个结点的链表
+*/
+extern T List_list(void* x, ...);
 
-/* add a new node to the back, return this node */
-ListNode* list_pushback(ListNode* header, void* value);
+/*
+	将第一个结点的 first 字段赋值给*x（如果x不是NULL）
+	移除第一个结点并释放其内存，最后返回结果链表
+*/
+extern T List_pop(T list, void** x);
 
-/* insert a node after prenode, return this node */
-ListNode* list_insert(ListNode* prenode, void* value);
+/*
+	在链表list的起始处添加一个包含x的新结点，并返回新链表
+*/
+extern T List_push(T list, void* x);
 
-/* remove the node which value is given, return header node, you should assign it to the header */
-ListNode* list_remove(ListNode* header, void* value, cmp_function cmp);
+/*
+	逆转list中结点的顺序，然后返回结果链表
+*/
+extern T List_reverse(T list);
 
-/* search the node which value is given, return found node, NULL if not found  */
-ListNode* list_search(ListNode* header, void* value, cmp_function cmp);
+/*
+	返回list中结点数目
+*/
+extern int List_length(T list);
 
-/* sort the list by given sort function */
-void list_sort(ListNode* header, cmp_function cmp);
+/*
+	释放*list中所有结点并将其设置为NULL指针
+*/
+extern void List_free(T* list);
 
-/* return the list size, empty list return 0 */
-int list_size(ListNode* header);
+/*
+	对list中的每个结点调用apply指向的函数
+*/
+extern void List_map(T list, void apply(void** x, void* cl), void* cl);
 
-/* return next node */
-ListNode* list_next(ListNode* node);
+/*
+	创建一个数组，数组元素[0-N-1]分别包含链表中N个结点的first字段值
+	返回指向数组第一个元素的指针
+*/
+extern void** List_toArray(T list, void* end);
+
+#undef T
 
 #endif /* LIST_H */
